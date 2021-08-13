@@ -1,0 +1,32 @@
+---
+title: "runoff_volumes"
+author: "Jake Eisaguirre"
+date: "8/13/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(here)
+```
+
+```{r}
+
+source(here("src", "storm_runoff.R"))
+
+rain_seq <- seq(from = 0.6, to = 0.8, by = 0.01)
+
+pred_runoff_data <- predict_runoff(rain_seq, 182)
+
+pred_runoff_data
+
+runoff_df <- data.frame(rain_seq, pred_runoff_data)
+
+ggplot(data = runoff_df, aes(x = rain_seq, y = pred_runoff_data)) +
+  geom_point() + geom_line() + labs(x = "Cubic Inches", y = "Acres")
+
+ggsave(here("figs", "rain_figure.png"))
+
+```
+
