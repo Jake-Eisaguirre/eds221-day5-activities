@@ -38,7 +38,23 @@ yearly_tilapia_tot <- group_by(the_tilapia_data, year) %>%
 ggplot(yearly_tilapia_tot, aes(x = year, y = tilapia_tot)) +
   geom_line() + labs(x = "Year", y = "Tilapia Imported (thousands of pound^-1)")
 
-ggsave(here("fig", "yearly_tilapia_tot.png"))
+ggsave(here("figs", "yearly_tilapia_tot.png"))
 
+```
+
+```{r}
+
+select_imports <- the_tilapia_data %>% 
+  filter(country %in% c("Ecuador", "Honduras", "Costa Rica", "Mexico"), na.rm = TRUE)
+
+ggplot(select_imports, aes(x = year, y = tilapia, color = country)) +
+  geom_line() + 
+  labs(y = "Tilapia (thousands of pounds^-1)", x = "Year", title = "Tilapia Exports") + 
+  theme_classic() +
+  scale_color_manual(values = c("Ecuador" = "pink", "Honduras" = "purple" , "Costa Rica" = "orange", "Mexico" = "yellow"))
+
+#scale_colour_viridis_d()
+
+ggsave(here("figs", "select_countries.jpg"))
 ```
 
